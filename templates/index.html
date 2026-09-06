@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="game-card">
+        <p class="eyebrow">A little challenge</p>
+        <h1>Number Guessing Game</h1>
+        <p class="instructions">Guess a number between 1 and 100.</p>
+
+        {% if message %}
+            <div class="message {{ message_type }}" role="status">{{ message }}</div>
+        {% endif %}
+
+        {% if not game_over %}
+            <form method="post" class="guess-form">
+                <label for="guess">Your guess</label>
+                <input
+                    type="number"
+                    id="guess"
+                    name="guess"
+                    min="1"
+                    max="100"
+                    placeholder="50"
+                    required
+                    autofocus
+                >
+                <button type="submit">Guess</button>
+            </form>
+        {% else %}
+            <div class="win-panel">
+                <p class="win-title">Round complete!</p>
+                <p>Total attempts: <strong>{{ attempts }}</strong></p>
+                <form method="post">
+                    <button type="submit" name="action" value="new_game" class="play-again">
+                        Play Again
+                    </button>
+                </form>
+            </div>
+        {% endif %}
+
+        <p class="attempts">Attempts: <strong>{{ attempts }}</strong></p>
+    </main>
+</body>
+</html>
